@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>LB3</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header>
+      <h1>Лабораторная работа №3</h1>
+      <h4>КІУКІ-20-4<br>Коломийченко Алексей</h4>
+    </header>
+
+    <form id="employeeForm" method="get">
+      <table>
+        <tr>
+          <td>Фамилия</td>
+          <td>Дата поступления</td>
+        </tr>
+        <tr>
+          <td><input type="text" id="lastNameInput"placeholder="Введите фамилию..." /><br /></td>
+          <td>
+            <input type="date" id="employmentDateInput" name="date" /><br />
+          </td>
+        </tr>
+      </table>
+      <button id="btn" type="button" onclick="addEmployee()">
+        Добавить сотрудника
+      </button>
+      <button type="button" onclick="calculateAverageExperience()">
+        Рассчитать средний стаж работы
+      </button>
+    </form>
+
+    <p id="averageExperience"></p>
+    <script>
+      employmentDateInput.max = new Date().toISOString().split("T")[0];
+      let employees = [];
+      let countEmp = 0;
+
+      function addEmployee() {
+        if (countEmp < 5) {
+          countEmp++;
+          let employee = {
+            lastName: document.getElementById("lastNameInput").value,
+            employmentDate: new Date(
+              document.getElementById("employmentDateInput").value
+            ),
+          };
+          employees.push(employee);
+        } else {
+          window.alert("You've entered more than 5 employees !");
+        }
+      }
+
+      function calculateAverageExperience() {
+        let totalYears = 0;
+        let currentDate = new Date();
+        for (let i = 0; i < employees.length; i++) {
+          let yearsWorked =
+            currentDate.getFullYear() -
+            employees[i].employmentDate.getFullYear();
+          totalYears += yearsWorked;
+        }
+        document.getElementById("averageExperience").innerHTML =
+          "Average work experience for current time: " +
+          Math.round(totalYears / employees.length) +
+          " years";
+      }
+    </script>
+  </body>
+</html>
